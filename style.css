@@ -177,6 +177,7 @@
   }
 
   .menuBox{
+    display: none;
     position: absolute;
     top: 25px;
     right: -8px;
