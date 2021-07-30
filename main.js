@@ -1,5 +1,5 @@
 window.onload = function(){
-// js test
+
     const mainCard = document.querySelector('.calendar.main');
     const addCard = document.querySelector('.calendar.add');
 
@@ -28,35 +28,6 @@ window.onload = function(){
         displayCard('add');
     }, false);
     
-    const menuBtnList = document.querySelectorAll('.menu_btn');   
-    if( menuBtnList ){
-        for( const menuBtn of menuBtnList ){
-            menuBtn.addEventListener('click', function(){
-                console.log(this);
-            }); 
-        }
-        
-        /*
-        menuBtn.addEventListener('click', function(){
-            if( document.querySelector('.menuBox').offsetParent === null ){ // hidden
-                menuBox.style.display = 'block';
-            }else{
-                menuBox.style.display = 'none';
-            }
-        }, false);
-
-        const deleteBtn = document.querySelector('.delete_btn');
-        deleteBtn.addEventListener('click', function(){
-            const stockInfo = JSON.parse(localStorage.getItem('stockInfo'));
-            if( !Array.isArray(stockInfo) ){
-               localStorage.removeItem('stockInfo')
-            }else{
-
-            }
-        }, false);
-        */
-    }, false);
-
     const closeBtn = document.querySelector('.close_btn');
     closeBtn.addEventListener('click', function(){
         displayCard('main');
@@ -165,7 +136,7 @@ window.onload = function(){
             const getStockInfo = localStorage.getItem('stockInfo');
             if( getStockInfo !== null ){
                 let tempArr = JSON.parse(getStockInfo);
-                if( !Array.isArray(tempArr) ){
+                if( !Array.isArray(tempArr) || tempArr.length === 0 ){
                     tempArr = [JSON.parse(getStockInfo)];
                 }
                 tempArr.push(setStockInfo);
@@ -177,7 +148,7 @@ window.onload = function(){
         }else{
             totalPrice.textContent = '0 원';
             if( info ){
-                if( Array.isArray(info) ){
+                if( Array.isArray(info) || info.length === 0 ){
                     info = info.reverse();
                 }else{
                     info = [info];
@@ -204,6 +175,9 @@ window.onload = function(){
                 }
             }
         }
+
+        menuBtnClick();
+        deleteBtnClick();
     }
 
     const inputNumberList = document.querySelectorAll('input.num');
@@ -252,6 +226,39 @@ window.onload = function(){
         }else{
             addPriceInput.parentNode.classList.remove('error');
             return true;
+        }
+    }
+
+    function menuBtnClick(){
+        const menuBtnList = document.querySelectorAll('.menu_btn');
+        if( menuBtnList ){
+            for( const menuBtn of menuBtnList ){
+                menuBtn.addEventListener('click', function(){
+                    if( this.nextSibling.offsetParent === null ){
+                        this.nextSibling.style.display = 'block';
+                    }else{
+                        this.nextSibling.style.display = 'none';
+                    }
+                }, false); 
+            }
+        }
+    }
+
+    function deleteBtnClick(){
+        const deleteBtnList = document.querySelectorAll('.delete_btn');
+        for (var i = 0; i < deleteBtnList.length; i++) {
+            (function(idx) {
+                deleteBtnList[idx].onclick = function() {
+                    const stockInfo = JSON.parse(localStorage.getItem('stockInfo'));
+                    if( !Array.isArray(stockInfo) || stockInfo.length === 0 ){
+                        localStorage.removeItem('stockInfo');
+                    }else{
+                        const clickIdx = Number(this.offsetParent.offsetParent.getAttribute('data-idx'));
+                        stockInfo.splice(clickIdx-1, 1);
+                        localStorage.setItem('stockInfo', JSON.stringify(stockInfo));
+                    }
+                }
+            })(i);
         }
     }
 
