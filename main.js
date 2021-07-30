@@ -28,12 +28,15 @@ window.onload = function(){
         displayCard('add');
     }, false);
     
-/*
-    const deleteBtn = document.querySelector('.delete_btn');
-    deleteBtn.addEventListener('click', function(){
-        
+    const menuBtn = document.querySelector('.menu_btn');
+    const menuBox = document.querySelector('.menuBox');
+    menuBtn.addEventListener('click', function(){
+        if( document.querySelector('.menuBox').offsetParent === null ){ // hidden
+            menuBox.style.display = 'block';
+        }else{
+            menuBox.style.display = 'none';
+        }
     }, false);
-*/
 
     const closeBtn = document.querySelector('.close_btn');
     closeBtn.addEventListener('click', function(){
