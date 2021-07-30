@@ -28,9 +28,15 @@ window.onload = function(){
         displayCard('add');
     }, false);
     
-    const menuBtn = document.querySelector('.menu_btn');
-    const menuBox = document.querySelector('.menuBox');
-    if( menuBtn ){
+    const menuBtnList = document.querySelectorAll('.menu_btn');   
+    if( menuBtnList ){
+        for( const menuBtn of menuBtnList ){
+            menuBtn.addEventListener('click', function(){
+                console.log(this);
+            }); 
+        }
+        
+        /*
         menuBtn.addEventListener('click', function(){
             if( document.querySelector('.menuBox').offsetParent === null ){ // hidden
                 menuBox.style.display = 'block';
@@ -48,7 +54,8 @@ window.onload = function(){
 
             }
         }, false);
-    }
+        */
+    }, false);
 
     const closeBtn = document.querySelector('.close_btn');
     closeBtn.addEventListener('click', function(){
