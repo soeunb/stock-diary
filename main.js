@@ -30,13 +30,25 @@ window.onload = function(){
     
     const menuBtn = document.querySelector('.menu_btn');
     const menuBox = document.querySelector('.menuBox');
-    menuBtn.addEventListener('click', function(){
-        if( document.querySelector('.menuBox').offsetParent === null ){ // hidden
-            menuBox.style.display = 'block';
-        }else{
-            menuBox.style.display = 'none';
-        }
-    }, false);
+    if( menuBtn ){
+        menuBtn.addEventListener('click', function(){
+            if( document.querySelector('.menuBox').offsetParent === null ){ // hidden
+                menuBox.style.display = 'block';
+            }else{
+                menuBox.style.display = 'none';
+            }
+        }, false);
+
+        const deleteBtn = document.querySelector('.delete_btn');
+        deleteBtn.addEventListener('click', function(){
+            const stockInfo = JSON.parse(localStorage.getItem('stockInfo'));
+            if( !Array.isArray(stockInfo) ){
+               localStorage.removeItem('stockInfo')
+            }else{
+
+            }
+        }, false);
+    }
 
     const closeBtn = document.querySelector('.close_btn');
     closeBtn.addEventListener('click', function(){
